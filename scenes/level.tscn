@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbb4rhgsc8dd0"]
+
+[ext_resource type="PackedScene" uid="uid://bqd4xph2exccu" path="res://scenes/ui/pause_screen.tscn" id="1_4uvw4"]
+
+[node name="Level" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseScreen" parent="CanvasLayer" instance=ExtResource("1_4uvw4")]
+visible = false

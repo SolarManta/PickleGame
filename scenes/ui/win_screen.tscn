@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://caviwmd15asoj"]
+
+[ext_resource type="Script" uid="uid://x856gv571ykk" path="res://scripts/ui/end_screen.gd" id="1_qf8xv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4gbiv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7g0yu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gt2dc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sqb0p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tkwli"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jleo7"]
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qf8xv")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_right = 1.00952
+anchor_bottom = 0.3
+theme_override_font_sizes/font_size = 50
+text = "You won!"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Retry" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.533333
+anchor_right = 0.628571
+anchor_bottom = 0.666667
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxEmpty_4gbiv")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_7g0yu")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gt2dc")
+text = "Retry"
+metadata/_edit_use_anchors_ = true
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.733333
+anchor_right = 0.628571
+anchor_bottom = 0.866667
+offset_top = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxEmpty_sqb0p")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tkwli")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jleo7")
+text = "Quit"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="mouse_entered" from="Retry" to="." method="_play_hover"]
+[connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]
+[connection signal="mouse_entered" from="Quit" to="." method="_play_hover"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

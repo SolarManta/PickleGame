@@ -1,0 +1,181 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtuueek546o0t"]
+
+[ext_resource type="Script" uid="uid://bl38qdfr0a4mb" path="res://scripts/ui/settings.gd" id="1_wnefb"]
+[ext_resource type="Script" uid="uid://doj0o6yxky1hj" path="res://scripts/ui/volume_slider.gd" id="2_e46r2"]
+[ext_resource type="Texture2D" uid="uid://bbhqxb3vx880t" path="res://assets/sprites/icon.svg" id="3_b3y77"]
+
+[sub_resource type="Gradient" id="Gradient_5icwx"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5m8fl"]
+gradient = SubResource("Gradient_5icwx")
+
+[node name="Settings" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wnefb")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.294118)
+layout_mode = 0
+anchor_right = 1.00952
+anchor_bottom = 1.0
+offset_right = -3.05176e-05
+texture = SubResource("GradientTexture1D_5m8fl")
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.171429
+anchor_top = 0.1
+anchor_right = 0.819048
+anchor_bottom = 0.266667
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Settings"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Volume" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.388889
+anchor_top = 0.271605
+anchor_right = 0.611545
+anchor_bottom = 0.567901
+offset_top = -1.52588e-05
+offset_right = 598.5
+offset_bottom = 448.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+theme_override_constants/separation = 25
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="MasterText" type="Label" parent="Volume"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 55
+text = "Master Volume"
+horizontal_alignment = 1
+
+[node name="Master" type="HSlider" parent="Volume" groups=["VolumeSliders"]]
+layout_mode = 2
+theme_override_constants/grabber_offset = 0
+max_value = 1.0
+step = 0.05
+value = 1.0
+scrollable = false
+script = ExtResource("2_e46r2")
+_bus_name = "Master"
+metadata/_edit_use_anchors_ = true
+
+[node name="MusicText" type="Label" parent="Volume"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 55
+text = "Music"
+horizontal_alignment = 1
+
+[node name="Music" type="HSlider" parent="Volume" groups=["VolumeSliders"]]
+layout_mode = 2
+theme_override_constants/grabber_offset = 0
+max_value = 1.0
+step = 0.05
+value = 1.0
+scrollable = false
+script = ExtResource("2_e46r2")
+_bus_name = "Music"
+metadata/_edit_use_anchors_ = true
+
+[node name="SFXText" type="Label" parent="Volume"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 55
+text = "SFX"
+horizontal_alignment = 1
+
+[node name="SFX" type="HSlider" parent="Volume" groups=["VolumeSliders"]]
+layout_mode = 2
+theme_override_constants/grabber_offset = 0
+max_value = 1.0
+step = 0.05
+value = 1.0
+scrollable = false
+script = ExtResource("2_e46r2")
+_bus_name = "SFX"
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.838095
+anchor_top = 0.833333
+anchor_right = 0.980952
+anchor_bottom = 0.966667
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 25
+text = "Back"
+metadata/_edit_use_anchors_ = true
+
+[node name="Controls" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.419048
+anchor_top = 0.7
+anchor_right = 0.595238
+anchor_bottom = 0.820833
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 25
+text = "Controls"
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 40.0
+theme_override_constants/separation = 10
+
+[node name="Fullscreen" type="TextureButton" parent="."]
+layout_mode = 2
+anchor_left = 0.5625
+anchor_top = 0.580247
+anchor_right = 0.611111
+anchor_bottom = 0.666667
+focus_mode = 0
+toggle_mode = true
+texture_normal = ExtResource("3_b3y77")
+ignore_texture_size = true
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="FullscreenText" type="Label" parent="."]
+layout_mode = 2
+anchor_left = 0.388889
+anchor_top = 0.592593
+anchor_right = 0.49566
+anchor_bottom = 0.654321
+offset_bottom = -3.05176e-05
+theme_override_font_sizes/font_size = 25
+text = "Fullscreen"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="value_changed" from="Volume/Master" to="Volume/Master" method="_on_value_changed"]
+[connection signal="value_changed" from="Volume/Music" to="Volume/Music" method="_on_value_changed"]
+[connection signal="value_changed" from="Volume/SFX" to="Volume/SFX" method="_on_value_changed"]
+[connection signal="mouse_entered" from="Back" to="." method="_play_hover"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="mouse_entered" from="Controls" to="." method="_play_hover"]
+[connection signal="pressed" from="Controls" to="." method="_on_controls_pressed"]
+[connection signal="toggled" from="Fullscreen" to="." method="_on_fullscreen_toggled"]

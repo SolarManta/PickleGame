@@ -1,0 +1,108 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqd4xph2exccu"]
+
+[ext_resource type="Script" uid="uid://cy8rf47vgrql8" path="res://scripts/ui/pause_screen.gd" id="1_on8gl"]
+
+[sub_resource type="Gradient" id="Gradient_q6e6e"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p4msf"]
+gradient = SubResource("Gradient_q6e6e")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llus6"]
+region = Rect2(50, 2, 45, 44)
+
+[node name="PauseScreen" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_on8gl")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.294118)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.00952
+anchor_bottom = 1.0
+offset_right = -3.05176e-05
+texture = SubResource("GradientTexture1D_p4msf")
+metadata/_edit_use_anchors_ = true
+
+[node name="Controls" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.171429
+anchor_top = 0.0999999
+anchor_right = 0.819048
+anchor_bottom = 0.9
+offset_top = 1.52588e-05
+texture = SubResource("AtlasTexture_llus6")
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.32619
+anchor_top = 0.1
+anchor_right = 0.645238
+anchor_bottom = 0.3
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 45
+text = "Paused"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Settings" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.380952
+anchor_top = 0.333333
+anchor_right = 0.609524
+anchor_bottom = 0.466667
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 25
+text = "Settings"
+metadata/_edit_use_anchors_ = true
+
+[node name="Resume" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.380952
+anchor_top = 0.533333
+anchor_right = 0.609524
+anchor_bottom = 0.666667
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 25
+text = "Resume"
+metadata/_edit_use_anchors_ = true
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.380952
+anchor_top = 0.733333
+anchor_right = 0.609524
+anchor_bottom = 0.866667
+offset_top = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 25
+text = "Quit"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="mouse_entered" from="Settings" to="." method="_play_hover"]
+[connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]
+[connection signal="mouse_entered" from="Resume" to="." method="_play_hover"]
+[connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
+[connection signal="mouse_entered" from="Quit" to="." method="_play_hover"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

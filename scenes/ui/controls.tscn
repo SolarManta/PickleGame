@@ -1,0 +1,189 @@
+[gd_scene load_steps=3 format=3 uid="uid://b80hgcqhea1e0"]
+
+[ext_resource type="Script" uid="uid://bqcrwssuowgqk" path="res://scripts/ui/controls.gd" id="1_fvm11"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iiro1"]
+region = Rect2(50, 2, 45, 44)
+
+[node name="Controls" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fvm11")
+
+[node name="Controls" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0952381
+anchor_top = 0.0999999
+anchor_right = 0.895238
+anchor_bottom = 0.9
+offset_top = 1.52588e-05
+texture = SubResource("AtlasTexture_iiro1")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.171429
+anchor_top = 0.1
+anchor_right = 0.819048
+anchor_bottom = 0.25
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Controls"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.838095
+anchor_top = 0.833333
+anchor_right = 0.980952
+anchor_bottom = 0.966667
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "Back"
+metadata/_edit_use_anchors_ = true
+
+[node name="Reset" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.766667
+anchor_right = 0.604762
+anchor_bottom = 0.865433
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "Reset controls"
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.159722
+anchor_top = 0.259259
+anchor_right = 0.845436
+anchor_bottom = 0.725925
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 0
+theme_override_constants/separation = 100
+
+[node name="LeftColumnLabels" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="UpLabel" type="Label" parent="ScrollContainer/HBoxContainer/LeftColumnLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Up"
+
+[node name="DownLabel" type="Label" parent="ScrollContainer/HBoxContainer/LeftColumnLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Down"
+vertical_alignment = 1
+
+[node name="LeftLabel" type="Label" parent="ScrollContainer/HBoxContainer/LeftColumnLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Left"
+vertical_alignment = 1
+
+[node name="RightLabel" type="Label" parent="ScrollContainer/HBoxContainer/LeftColumnLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Right"
+vertical_alignment = 1
+
+[node name="LeftColumnButtons" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Up" type="Button" parent="ScrollContainer/HBoxContainer/LeftColumnButtons" groups=["RemapButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "W"
+
+[node name="Down" type="Button" parent="ScrollContainer/HBoxContainer/LeftColumnButtons" groups=["RemapButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "S"
+
+[node name="Left" type="Button" parent="ScrollContainer/HBoxContainer/LeftColumnButtons" groups=["RemapButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "A"
+
+[node name="Right" type="Button" parent="ScrollContainer/HBoxContainer/LeftColumnButtons" groups=["RemapButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "D"
+
+[node name="Seperator" type="Label" parent="ScrollContainer/HBoxContainer"]
+layout_mode = 2
+text = " "
+
+[node name="RightColumnLabels" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="PauseLabel" type="Label" parent="ScrollContainer/HBoxContainer/RightColumnLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Pause"
+vertical_alignment = 1
+
+[node name="InteractLabel" type="Label" parent="ScrollContainer/HBoxContainer/RightColumnLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Interact
+ "
+vertical_alignment = 1
+
+[node name="RightColumnButtons" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Pause" type="Button" parent="ScrollContainer/HBoxContainer/RightColumnButtons" groups=["RemapButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "Escape"
+
+[node name="Interact" type="Button" parent="ScrollContainer/HBoxContainer/RightColumnButtons" groups=["RemapButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "Space"
+
+[connection signal="mouse_entered" from="Back" to="." method="_play_hover"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="mouse_entered" from="Reset" to="." method="_play_hover"]
+[connection signal="pressed" from="Reset" to="." method="_on_reset_pressed"]
