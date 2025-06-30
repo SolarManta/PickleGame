@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbb4rhgsc8dd0"]
+[gd_scene load_steps=5 format=3 uid="uid://cbb4rhgsc8dd0"]
 
 [ext_resource type="PackedScene" uid="uid://bqd4xph2exccu" path="res://scenes/ui/pause_screen.tscn" id="1_4uvw4"]
+[ext_resource type="PackedScene" uid="uid://bn0gjdq5orduy" path="res://scenes/player.tscn" id="2_w8frs"]
+[ext_resource type="Texture2D" uid="uid://bbhqxb3vx880t" path="res://assets/sprites/icon.svg" id="3_mx8sn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppgk2"]
+size = Vector2(304, 24)
 
 [node name="Level" type="Node2D"]
 
@@ -8,3 +13,18 @@
 
 [node name="PauseScreen" parent="CanvasLayer" instance=ExtResource("1_4uvw4")]
 visible = false
+
+[node name="Player" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(312, 144)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(312, 144)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1.52588e-05, 36)
+shape = SubResource("RectangleShape2D_ppgk2")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(1.52588e-05, 36)
+scale = Vector2(2.375, 0.1875)
+texture = ExtResource("3_mx8sn")

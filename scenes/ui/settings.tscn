@@ -23,8 +23,9 @@ script = ExtResource("1_wnefb")
 
 [node name="Background" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.294118)
-layout_mode = 0
-anchor_right = 1.00952
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -3.05176e-05
 texture = SubResource("GradientTexture1D_5m8fl")
@@ -46,10 +47,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Volume" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.388889
-anchor_top = 0.271605
-anchor_right = 0.611545
-anchor_bottom = 0.567901
+anchor_left = 0.325
+anchor_top = 0.266667
+anchor_right = 0.547656
+anchor_bottom = 0.562963
 offset_top = -1.52588e-05
 offset_right = 598.5
 offset_bottom = 448.0
@@ -128,10 +129,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Controls" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.419048
-anchor_top = 0.7
-anchor_right = 0.595238
-anchor_bottom = 0.820833
+anchor_left = 0.4
+anchor_top = 0.844444
+anchor_right = 0.57619
+anchor_bottom = 0.965277
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -147,10 +148,10 @@ theme_override_constants/separation = 10
 
 [node name="Fullscreen" type="TextureButton" parent="."]
 layout_mode = 2
-anchor_left = 0.5625
-anchor_top = 0.580247
-anchor_right = 0.611111
-anchor_bottom = 0.666667
+anchor_left = 0.5875
+anchor_top = 0.711111
+anchor_right = 0.648438
+anchor_bottom = 0.822222
 focus_mode = 0
 toggle_mode = true
 texture_normal = ExtResource("3_b3y77")
@@ -160,10 +161,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="FullscreenText" type="Label" parent="."]
 layout_mode = 2
-anchor_left = 0.388889
-anchor_top = 0.592593
-anchor_right = 0.49566
-anchor_bottom = 0.654321
+anchor_left = 0.3375
+anchor_top = 0.711111
+anchor_right = 0.529688
+anchor_bottom = 0.808333
 offset_bottom = -3.05176e-05
 theme_override_font_sizes/font_size = 25
 text = "Fullscreen"
