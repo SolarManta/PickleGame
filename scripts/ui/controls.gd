@@ -79,6 +79,9 @@ func _save_controls():
 	input_config.data_dic = {}
 
 	for button: Button in get_tree().get_nodes_in_group("RemapButtons"):
+		if !InputMap.action_get_events(button.name):
+			_on_reset_pressed()
+			break
 		input_config.data_dic[button.name] = InputMap.action_get_events(button.name)[0]
 
 	ResourceSaver.save(input_config, "user://saves/controls.tres", ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)

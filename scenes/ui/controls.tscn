@@ -85,103 +85,104 @@ size_flags_horizontal = 6
 size_flags_vertical = 0
 theme_override_constants/separation = 100
 
-[node name="LeftColumnLabels" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="LabelContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="UpLabel" type="Label" parent="ScrollContainer/HBoxContainer/LeftColumnLabels"]
+[node name="UpLabel" type="Label" parent="ScrollContainer/HBoxContainer/LabelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Up"
 
-[node name="DownLabel" type="Label" parent="ScrollContainer/HBoxContainer/LeftColumnLabels"]
+[node name="DownLabel" type="Label" parent="ScrollContainer/HBoxContainer/LabelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Down"
 vertical_alignment = 1
 
-[node name="LeftLabel" type="Label" parent="ScrollContainer/HBoxContainer/LeftColumnLabels"]
+[node name="LeftLabel" type="Label" parent="ScrollContainer/HBoxContainer/LabelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Left"
 vertical_alignment = 1
 
-[node name="RightLabel" type="Label" parent="ScrollContainer/HBoxContainer/LeftColumnLabels"]
+[node name="RightLabel" type="Label" parent="ScrollContainer/HBoxContainer/LabelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Right"
 vertical_alignment = 1
 
-[node name="LeftColumnButtons" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="PauseLabel" type="Label" parent="ScrollContainer/HBoxContainer/LabelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Pause"
+vertical_alignment = 1
+
+[node name="JumpLabel" type="Label" parent="ScrollContainer/HBoxContainer/LabelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Jump"
+vertical_alignment = 1
+
+[node name="DashLabel" type="Label" parent="ScrollContainer/HBoxContainer/LabelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Dash
+ "
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Up" type="Button" parent="ScrollContainer/HBoxContainer/LeftColumnButtons" groups=["RemapButtons"]]
+[node name="Up" type="Button" parent="ScrollContainer/HBoxContainer/ButtonContainer" groups=["RemapButtons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "W"
 
-[node name="Down" type="Button" parent="ScrollContainer/HBoxContainer/LeftColumnButtons" groups=["RemapButtons"]]
+[node name="Down" type="Button" parent="ScrollContainer/HBoxContainer/ButtonContainer" groups=["RemapButtons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "S"
 
-[node name="Left" type="Button" parent="ScrollContainer/HBoxContainer/LeftColumnButtons" groups=["RemapButtons"]]
+[node name="Left" type="Button" parent="ScrollContainer/HBoxContainer/ButtonContainer" groups=["RemapButtons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "A"
 
-[node name="Right" type="Button" parent="ScrollContainer/HBoxContainer/LeftColumnButtons" groups=["RemapButtons"]]
+[node name="Right" type="Button" parent="ScrollContainer/HBoxContainer/ButtonContainer" groups=["RemapButtons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "D"
 
-[node name="Seperator" type="Label" parent="ScrollContainer/HBoxContainer"]
-layout_mode = 2
-text = " "
-
-[node name="RightColumnLabels" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 25
-
-[node name="PauseLabel" type="Label" parent="ScrollContainer/HBoxContainer/RightColumnLabels"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Pause"
-vertical_alignment = 1
-
-[node name="InteractLabel" type="Label" parent="ScrollContainer/HBoxContainer/RightColumnLabels"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Interact
- "
-vertical_alignment = 1
-
-[node name="RightColumnButtons" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="Pause" type="Button" parent="ScrollContainer/HBoxContainer/RightColumnButtons" groups=["RemapButtons"]]
+[node name="Pause" type="Button" parent="ScrollContainer/HBoxContainer/ButtonContainer" groups=["RemapButtons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "Escape"
 
-[node name="Interact" type="Button" parent="ScrollContainer/HBoxContainer/RightColumnButtons" groups=["RemapButtons"]]
+[node name="Jump" type="Button" parent="ScrollContainer/HBoxContainer/ButtonContainer" groups=["RemapButtons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "Space"
+
+[node name="Dash" type="Button" parent="ScrollContainer/HBoxContainer/ButtonContainer" groups=["RemapButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "Shift"
 
 [connection signal="mouse_entered" from="Back" to="." method="_play_hover"]
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
