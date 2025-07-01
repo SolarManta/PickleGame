@@ -1,42 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://bn0gjdq5orduy"]
+[gd_scene load_steps=4 format=3 uid="uid://bn0gjdq5orduy"]
 
-[ext_resource type="Texture2D" uid="uid://bbhqxb3vx880t" path="res://assets/sprites/icon.svg" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://b1f63hyusacng" path="res://scripts/player.gd" id="1_g2els"]
-[ext_resource type="Texture2D" uid="uid://d0ph6af0d841h" path="res://assets/pixilart-drawing_7.png" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://bdh4ieg7kd3rd" path="res://assets/sprites/pickle.png" id="2_g2els"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
-size = Vector2(32, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
-size = Vector2(32, 32)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
-radius = 6.0
-height = 14.0
+size = Vector2(32, 40)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_g2els")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_g2els")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_3vyb7")
+[node name="Marker2D" type="Marker2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_qhqgy")
-
-[node name="Area2D2" type="Area2D" parent="."]
-
-[node name="HurtBox" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(24, -2)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_qhqgy")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Area2D2"]
-position = Vector2(25.5, 1.5)
-scale = Vector2(1.78125, 1.78125)
-texture = ExtResource("3_qhqgy")
+[node name="Sprite2D" type="Sprite2D" parent="Marker2D"]
+position = Vector2(-1, -2)
+scale = Vector2(0.0901804, 0.0882616)
+texture = ExtResource("2_g2els")

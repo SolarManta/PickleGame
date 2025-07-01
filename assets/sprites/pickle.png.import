@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://damnqurjese4d"
-path="res://.godot/imported/pixilart-drawing_7.png-e6c5db4db1fb8e4ff7d4a73716982547.ctex"
+uid="uid://bdh4ieg7kd3rd"
+path="res://.godot/imported/pickle.png-66c0ee8581d377a8a2f38d9b8217475b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scripts/pixilart-drawing_7.png"
-dest_files=["res://.godot/imported/pixilart-drawing_7.png-e6c5db4db1fb8e4ff7d4a73716982547.ctex"]
+source_file="res://assets/sprites/pickle.png"
+dest_files=["res://.godot/imported/pickle.png-66c0ee8581d377a8a2f38d9b8217475b.ctex"]
 
 [params]
 

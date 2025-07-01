@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://da2hsir60tvsu" path="res://scripts/hitbox_component.gd" id="1_0rji1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ra3w"]
+size = Vector2(32, 32)
 
 [node name="HitboxComponent" type="Area2D"]
 script = ExtResource("1_0rji1")
