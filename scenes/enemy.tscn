@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6raqqqaklq5g"]
+
+[ext_resource type="Texture2D" uid="uid://bbhqxb3vx880t" path="res://assets/sprites/icon.svg" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://bpgq6ne3vfjfv" path="res://scenes/health.gd" id="2_md0e3"]
+[ext_resource type="Script" uid="uid://da2hsir60tvsu" path="res://scenes/hitbox_component.gd" id="3_4ra3w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
+size = Vector2(32, 32)
+
+[node name="Enemy" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_7p1mj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_md0e3")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_md0e3")
+MAX_HEALTH = null
+
+[node name="Hitbox Component" type="Area2D" parent="."]
+script = ExtResource("3_4ra3w")
