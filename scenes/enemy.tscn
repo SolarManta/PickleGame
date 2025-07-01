@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://b6raqqqaklq5g"]
 
 [ext_resource type="Texture2D" uid="uid://bbhqxb3vx880t" path="res://assets/sprites/icon.svg" id="1_7p1mj"]
-[ext_resource type="Script" uid="uid://bpgq6ne3vfjfv" path="res://scenes/health.gd" id="2_md0e3"]
-[ext_resource type="Script" uid="uid://da2hsir60tvsu" path="res://scenes/hitbox_component.gd" id="3_4ra3w"]
+[ext_resource type="PackedScene" uid="uid://b61l0tm8qofts" path="res://scenes/health_component.tscn" id="2_4ra3w"]
+[ext_resource type="PackedScene" uid="uid://bly8v11noeahq" path="res://scenes/hitbox_component.tscn" id="3_5uy6h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
 size = Vector2(32, 32)
@@ -16,9 +16,6 @@ texture = ExtResource("1_7p1mj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_md0e3")
 
-[node name="Health" type="Node" parent="."]
-script = ExtResource("2_md0e3")
-MAX_HEALTH = null
+[node name="HealthComponent" parent="." instance=ExtResource("2_4ra3w")]
 
-[node name="Hitbox Component" type="Area2D" parent="."]
-script = ExtResource("3_4ra3w")
+[node name="HitboxComponent" parent="." instance=ExtResource("3_5uy6h")]
