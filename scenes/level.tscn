@@ -1,11 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbb4rhgsc8dd0"]
+[gd_scene load_steps=6 format=4 uid="uid://cbb4rhgsc8dd0"]
 
 [ext_resource type="PackedScene" uid="uid://bqd4xph2exccu" path="res://scenes/ui/pause_screen.tscn" id="1_4uvw4"]
 [ext_resource type="PackedScene" uid="uid://bn0gjdq5orduy" path="res://scenes/player.tscn" id="2_w8frs"]
 [ext_resource type="Texture2D" uid="uid://bbhqxb3vx880t" path="res://assets/sprites/icon.svg" id="3_mx8sn"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w8frs"]
-size = Vector2(640, 32)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w8frs"]
+texture = ExtResource("3_mx8sn")
+texture_region_size = Vector2i(32, 32)
+4:2/0 = 0
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[sub_resource type="TileSet" id="TileSet_mx8sn"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_w8frs")
 
 [node name="Level" type="Node2D"]
 
@@ -17,108 +26,6 @@ visible = false
 [node name="Player" parent="." instance=ExtResource("2_w8frs")]
 position = Vector2(320, 180)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(304, 216)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(16, 0)
-shape = SubResource("RectangleShape2D_w8frs")
-
-[node name="Sprite2D21" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(320, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D22" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(288, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D23" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(256, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D24" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(224, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D25" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(192, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D26" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(160, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D27" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(128, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D28" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(96, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D29" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(64, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D30" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(32, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D31" type="Sprite2D" parent="StaticBody2D"]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D32" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-32, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D33" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-64, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D34" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-96, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D35" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-128, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D36" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-160, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D37" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-192, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D38" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-224, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D39" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-256, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
-
-[node name="Sprite2D40" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-288, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_mx8sn")
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAATAAoAAAAAAAAAAAASAAoAAAAAAAAAAAARAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAADAAoAAAAAAAAAAAACAAoAAAAAAAAAAAABAAoAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAAOAAkAAAAAAAAAAAASAAkAAAAAAAAAAAASAAgAAAAAAAAAAAASAAcAAAAAAAAAAAAGAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAHAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAIAAAAAAAAAAAAHAAEAAAAAAAAAAAAHAAAAAAAAAAAAAAAHAP//AAAAAAAAAAAHAAMAAAAAAAAAAAAJAAkAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_mx8sn")

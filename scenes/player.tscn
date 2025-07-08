@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ce2sr367w5gt1" path="res://assets/sprites/pickle.png" id="2_g2els"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
-size = Vector2(32, 40)
+size = Vector2(30, 40)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_g2els")
@@ -20,3 +20,11 @@ shape = SubResource("RectangleShape2D_g2els")
 position = Vector2(-1, -2)
 scale = Vector2(0.0901804, 0.0882616)
 texture = ExtResource("2_g2els")
+
+[node name="TopRayCast" type="RayCast2D" parent="Marker2D"]
+position = Vector2(0, -8)
+target_position = Vector2(32, 0)
+
+[node name="BottomRayCast" type="RayCast2D" parent="Marker2D"]
+position = Vector2(0, 8)
+target_position = Vector2(24, 0)
