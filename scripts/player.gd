@@ -11,9 +11,9 @@ const JUMP_BUFFER = 0.04
 
 # Wall interaction constants
 const WALL_SLIDE_SPEED = 100.0
-const MIN_WALL_JUMP_VELOCITY = 200
-const MAX_WALL_JUMP_VELOCITY = 300
-const WALL_JUMP_VELOCITY_CHANGE = 35
+const MIN_WALL_JUMP_SPEED = 200
+const MAX_WALL_JUMP_SPEED = 400
+const WALL_JUMP_SPEED_CHANGE = 75
 const WALL_JUMP_DURATION = 0.25
 const LEDGE_GRAB_COOLDOWN = 0.1
 
@@ -36,7 +36,7 @@ enum PlayerState {
 var state: PlayerState = PlayerState.IDLE
 var prev_direction: float = 1
 var direction: float = 0
-var wall_jump_velocity: float = MIN_WALL_JUMP_VELOCITY
+var wall_jump_speed: float = MIN_WALL_JUMP_SPEED
 var coyote_time: int = 0
 
 var can_dash: bool = true
@@ -66,17 +66,17 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_just_pressed("Dash") and can_dash:
 				prev_direction *= -1
 				_dash()
-			if wall_jump_velocity > MIN_WALL_JUMP_VELOCITY and Input.is_action_just_pressed("Jump"):
+			if wall_jump_speed > MIN_WALL_JUMP_SPEED and Input.is_action_just_pressed("Jump"):
 				_wall_jump()
 			if is_on_floor() or center.scale.x != direction or !top_cast.is_colliding():
-				state = PlayerState.IDLE
+				switch_state(PlayerState.IDLE)
 			move_and_slide()
 			return
 		PlayerState.LEDGE_GRABBING:
 			if Input.is_action_just_pressed("Jump"):
 				_ledge_grab_jump()
 			return
-
+	
 	# Update prev_direction and player orientation (flips the marker left/right)
 	if direction != 0:
 		prev_direction = direction
@@ -90,12 +90,13 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	else:
-		wall_jump_velocity = MAX_WALL_JUMP_VELOCITY
+		wall_jump_speed = MAX_WALL_JUMP_SPEED
 	
 	# Handle jump
 	if Input.is_action_just_pressed("Jump"):
 		_start_jump_buffer()
 	if buffered_jump and (is_on_floor() or coyote_time > 0):
+		switch_state(PlayerState.JUMPING)
 		velocity.y = JUMP_VELOCITY
 		buffered_jump = false
 		coyote_time = 0
@@ -121,23 +122,44 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x = direction * SPEED
 		if is_on_floor():
-			state = PlayerState.RUNNING
+			switch_state(PlayerState.RUNNING)
 	else:
 		velocity.x = 0
 		if velocity.y == 0:
-			state = PlayerState.IDLE
+			switch_state(PlayerState.IDLE)
 		elif velocity.y > 0:
-			state = PlayerState.FALLING
+			switch_state(PlayerState.FALLING)
 
 	move_and_slide()
 
+func switch_state(new_state: PlayerState):
+	if state == new_state:
+		return
+	
+	#print("State switched from " + PlayerState.keys()[state] + " to " + PlayerState.keys()[new_state])
+	state = new_state
+	match state:
+		PlayerState.LEDGE_GRABBING:
+			can_dash = true
+			
+			if bottom_cast.is_colliding() and bottom_cast.get_collider() is TileMapLayer:
+				var tilemap = bottom_cast.get_collider() as TileMapLayer
+				var collision_point = bottom_cast.get_collision_point()
+				var tile_coords = tilemap.local_to_map(collision_point)
+				var tile_pos = tilemap.map_to_local(tile_coords)
+				
+				if prev_direction == -1:
+					position = tile_pos - Vector2(1, 10)
+				elif prev_direction == 1:
+					position = tile_pos - Vector2(31, 10)
+
 # Handle state during dash
 func _dash():
-	state = PlayerState.DASHING
+	switch_state(PlayerState.DASHING)
 	can_dash = false
 	
 	await get_tree().create_timer(DASH_DURATION).timeout
-	state = PlayerState.IDLE
+	switch_state(PlayerState.IDLE)
 
 # Reset dash without pausing main code
 func _reset_dash():
@@ -150,19 +172,19 @@ func _determine_wall_state() -> bool:
 		return false
 	
 	if can_ledge_grab and !top_cast.is_colliding() and bottom_cast.is_colliding():
-		state = PlayerState.LEDGE_GRABBING
+		switch_state(PlayerState.LEDGE_GRABBING)
 		velocity = Vector2.ZERO
 		return true
 	
 	if velocity.y > 0 and top_cast.is_colliding() and bottom_cast.is_colliding() and center.scale.x == direction:
-		state = PlayerState.WALL_SLIDING
+		switch_state(PlayerState.WALL_SLIDING)
 		return true
 		
 	return false
 
 func _ledge_grab_jump():
+	switch_state(PlayerState.JUMPING)
 	velocity.y = JUMP_VELOCITY
-	state = PlayerState.JUMPING
 	move_and_slide()
 	
 	can_ledge_grab = false
@@ -170,13 +192,13 @@ func _ledge_grab_jump():
 	can_ledge_grab = true
 
 func _wall_jump():
-	velocity.y = -wall_jump_velocity
-	velocity.x = -direction * wall_jump_velocity
-	state = PlayerState.WALL_JUMPING
+	switch_state(PlayerState.WALL_JUMPING)
+	velocity.y = -wall_jump_speed
+	velocity.x = -prev_direction * wall_jump_speed
 	
 	await get_tree().create_timer(WALL_JUMP_DURATION).timeout
-	state = PlayerState.IDLE
-	wall_jump_velocity = clamp(wall_jump_velocity - WALL_JUMP_VELOCITY_CHANGE, MIN_WALL_JUMP_VELOCITY, MAX_WALL_JUMP_VELOCITY)
+	switch_state(PlayerState.FALLING)
+	wall_jump_speed = clamp(wall_jump_speed - WALL_JUMP_SPEED_CHANGE, MIN_WALL_JUMP_SPEED, MAX_WALL_JUMP_SPEED)
 
 func _start_jump_buffer():
 	buffered_jump = true
