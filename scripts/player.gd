@@ -5,7 +5,7 @@ extends CharacterBody2D
 # General movement constants
 const SPEED = 250.0
 const JUMP_VELOCITY = -400.0
-const JUMP_RELEASE_COEFF = 0.3 # The lower this is, the longer player stays in air after releaseding jump early
+const JUMP_RELEASE_COEFF = 0.3 # The lower this is, the longer player stays in air after releasing jump early
 const COYOTE_TIME = 5 # In frames
 const JUMP_BUFFER = 0.04
 
@@ -126,7 +126,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 		if velocity.y == 0:
 			state = PlayerState.IDLE
-		elif velocity.y < 0:
+		elif velocity.y > 0:
 			state = PlayerState.FALLING
 
 	move_and_slide()
@@ -175,7 +175,6 @@ func _wall_jump():
 	state = PlayerState.WALL_JUMPING
 	
 	await get_tree().create_timer(WALL_JUMP_DURATION).timeout
-
 	state = PlayerState.IDLE
 	wall_jump_velocity = clamp(wall_jump_velocity - WALL_JUMP_VELOCITY_CHANGE, MIN_WALL_JUMP_VELOCITY, MAX_WALL_JUMP_VELOCITY)
 
