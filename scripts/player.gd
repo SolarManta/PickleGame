@@ -1,10 +1,13 @@
+# Times are in seconds unless it says otherwise
+
 extends CharacterBody2D
 
 # General movement constants
 const SPEED = 250.0
 const JUMP_VELOCITY = -400.0
-const COYOTE_TIME = 0.15
-const JUMP_BUFFER = 0.15
+const JUMP_RELEASE_COEFF = 0.3 # The lower this is, the longer player stays in air after releaseding jump early
+const COYOTE_TIME = 5 # In frames
+const JUMP_BUFFER = 0.04
 
 # Wall interaction constants
 const WALL_SLIDE_SPEED = 100.0
@@ -34,9 +37,11 @@ var state: PlayerState = PlayerState.IDLE
 var prev_direction: float = 1
 var direction: float = 0
 var wall_jump_velocity: float = MIN_WALL_JUMP_VELOCITY
+var coyote_time: int = 0
 
 var can_dash: bool = true
 var can_ledge_grab: bool = true
+var buffered_jump: bool = false
 
 @onready var center: Marker2D = get_node("Marker2D")
 @onready var top_cast: RayCast2D = get_node("Marker2D/TopRayCast")
@@ -88,10 +93,20 @@ func _physics_process(delta: float) -> void:
 		wall_jump_velocity = MAX_WALL_JUMP_VELOCITY
 	
 	# Handle jump
-	if Input.is_action_just_pressed("Jump") and is_on_floor():
+	if Input.is_action_just_pressed("Jump"):
+		_start_jump_buffer()
+	if buffered_jump and (is_on_floor() or coyote_time > 0):
 		velocity.y = JUMP_VELOCITY
+		buffered_jump = false
+		coyote_time = 0
 	if Input.is_action_just_released("Jump") and velocity.y < 0:
-		velocity.y *= 0.3
+		velocity.y *= JUMP_RELEASE_COEFF
+	
+	# Update coyote time
+	if is_on_floor():
+		coyote_time = COYOTE_TIME
+	elif coyote_time > 0:
+		coyote_time -= 1
 	
 	# Reset dash tag
 	if !can_dash and is_on_floor():
@@ -163,3 +178,8 @@ func _wall_jump():
 
 	state = PlayerState.IDLE
 	wall_jump_velocity = clamp(wall_jump_velocity - WALL_JUMP_VELOCITY_CHANGE, MIN_WALL_JUMP_VELOCITY, MAX_WALL_JUMP_VELOCITY)
+
+func _start_jump_buffer():
+	buffered_jump = true
+	await get_tree().create_timer(JUMP_BUFFER).timeout
+	buffered_jump = false
