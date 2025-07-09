@@ -1,29 +1,11 @@
-# Times are in seconds unless it says otherwise
-
 extends CharacterBody2D
 
-# General movement constants
-const SPEED = 250.0
-const JUMP_VELOCITY = -400.0
-const JUMP_RELEASE_COEFF = 0.3 # The lower this is, the longer player stays in air after releasing jump early
-const COYOTE_TIME = 5 # In frames
-const JUMP_BUFFER = 0.04
-
-# Wall interaction constants
-const WALL_SLIDE_SPEED = 100.0
-const MIN_WALL_JUMP_SPEED = 200
-const MAX_WALL_JUMP_SPEED = 400
-const WALL_JUMP_SPEED_CHANGE = 75
-const WALL_JUMP_DURATION = 0.25
-const LEDGE_GRAB_COOLDOWN = 0.1
-
-# Dash constants
-const DASH_SPEED = 750.0
-const DASH_DURATION = 0.18
-const DASH_COOLDOWN = 0.5
+# TODO: Move input logic to _input()
+# TODO: Add real momentum during a momentum jump
+# TODO: Reset wall jump power when ledge grabbing
 
 enum PlayerState {
-	IDLE,
+	IDLING,
 	RUNNING,
 	DASHING,
 	JUMPING,
@@ -31,9 +13,33 @@ enum PlayerState {
 	WALL_SLIDING,
 	WALL_JUMPING,
 	LEDGE_GRABBING,
+	MOMENTUM_JUMPING,
 }
 
-var state: PlayerState = PlayerState.IDLE
+# Times are in seconds unless it says otherwise
+# General movement constants
+const SPEED := 250.0
+const JUMP_VELOCITY := -400.0
+const JUMP_RELEASE_COEFF := 0.3 # The lower this is, the longer player stays in air after releasing jump early
+const COYOTE_TIME := 5 # In frames
+const JUMP_BUFFER := 0.04
+const MOMENTUM_JUMP_VELOCITY := 400.0
+
+# Wall interaction constants
+const WALL_SLIDE_SPEED := 100.0
+const MIN_WALL_JUMP_SPEED := 200
+const MAX_WALL_JUMP_SPEED := 400
+const WALL_JUMP_SPEED_CHANGE := 75
+const WALL_JUMP_DURATION := 0.05
+const LEDGE_GRAB_COOLDOWN := 0.1
+const LEDGE_BOOST_DURATION := 0.05
+
+# Dash constants
+const DASH_SPEED := 750.0
+const DASH_DURATION := 0.18
+const DASH_COOLDOWN := 0.5
+
+var state: PlayerState = PlayerState.IDLING
 var prev_direction: float = 1
 var direction: float = 0
 var wall_jump_speed: float = MIN_WALL_JUMP_SPEED
@@ -69,12 +75,14 @@ func _physics_process(delta: float) -> void:
 			if wall_jump_speed > MIN_WALL_JUMP_SPEED and Input.is_action_just_pressed("Jump"):
 				_wall_jump()
 			if is_on_floor() or center.scale.x != direction or !top_cast.is_colliding():
-				switch_state(PlayerState.IDLE)
+				switch_state(PlayerState.IDLING)
 			move_and_slide()
 			return
 		PlayerState.LEDGE_GRABBING:
 			if Input.is_action_just_pressed("Jump"):
 				_ledge_grab_jump()
+			if Input.is_action_just_pressed("Dash"):
+				_ledge_grab_boost()
 			return
 	
 	# Update prev_direction and player orientation (flips the marker left/right)
@@ -118,26 +126,47 @@ func _physics_process(delta: float) -> void:
 		_dash()
 		return
 	
-	# Handle horizontal movement
-	if direction:
-		velocity.x = direction * SPEED
-		if is_on_floor():
-			switch_state(PlayerState.RUNNING)
-	else:
-		velocity.x = 0
+	# Basic state logic
+	if direction != 0 and is_on_floor():
+		switch_state(PlayerState.RUNNING)
+	if direction == 0:
 		if velocity.y == 0:
-			switch_state(PlayerState.IDLE)
+			switch_state(PlayerState.IDLING)
 		elif velocity.y > 0:
 			switch_state(PlayerState.FALLING)
-
+	
+	# Handle horizontal movement
+	if direction != 0:
+		if state != PlayerState.MOMENTUM_JUMPING:
+			velocity.x = direction * SPEED
+		else:
+			velocity.x = clamp(velocity.x + 5 * direction, -MOMENTUM_JUMP_VELOCITY, MOMENTUM_JUMP_VELOCITY)
+	else:
+		if state != PlayerState.MOMENTUM_JUMPING:
+			velocity.x = 0
+		else:
+			velocity.x = clamp(velocity.x - 5 * direction, -MOMENTUM_JUMP_VELOCITY, MOMENTUM_JUMP_VELOCITY)
+	
 	move_and_slide()
 
+# TODO: Make this readable
 func switch_state(new_state: PlayerState):
 	if state == new_state:
 		return
 	
+	match state:
+		PlayerState.DASHING:
+			# TODO: This doesnt work, add buffering jump to dash logic
+			if new_state == PlayerState.JUMPING:
+				velocity.x += MOMENTUM_JUMP_VELOCITY * prev_direction
+				switch_state(PlayerState.MOMENTUM_JUMPING)
+		PlayerState.MOMENTUM_JUMPING:
+			if new_state == PlayerState.FALLING:
+				return
+
 	#print("State switched from " + PlayerState.keys()[state] + " to " + PlayerState.keys()[new_state])
 	state = new_state
+	
 	match state:
 		PlayerState.LEDGE_GRABBING:
 			can_dash = true
@@ -149,9 +178,9 @@ func switch_state(new_state: PlayerState):
 				var tile_pos = tilemap.map_to_local(tile_coords)
 				
 				if prev_direction == -1:
-					position = tile_pos - Vector2(1, 10)
+					position = tile_pos - Vector2(0, 10)
 				elif prev_direction == 1:
-					position = tile_pos - Vector2(31, 10)
+					position = tile_pos - Vector2(32, 10)
 
 # Handle state during dash
 func _dash():
@@ -159,7 +188,7 @@ func _dash():
 	can_dash = false
 	
 	await get_tree().create_timer(DASH_DURATION).timeout
-	switch_state(PlayerState.IDLE)
+	switch_state(PlayerState.IDLING)
 
 # Reset dash without pausing main code
 func _reset_dash():
@@ -191,6 +220,21 @@ func _ledge_grab_jump():
 	await get_tree().create_timer(LEDGE_GRAB_COOLDOWN).timeout
 	can_ledge_grab = true
 
+func _ledge_grab_boost():
+	switch_state(PlayerState.MOMENTUM_JUMPING)
+	set_collision_mask_value(1, false)
+	velocity.y = JUMP_VELOCITY
+	var boost_dir = prev_direction
+	if direction != 0:
+		boost_dir = direction
+	velocity.x = MOMENTUM_JUMP_VELOCITY * boost_dir
+	move_and_slide()
+	
+	can_ledge_grab = false
+	await get_tree().create_timer(LEDGE_BOOST_DURATION).timeout
+	set_collision_mask_value(1, true)
+	can_ledge_grab = true
+
 func _wall_jump():
 	switch_state(PlayerState.WALL_JUMPING)
 	velocity.y = -wall_jump_speed
@@ -201,6 +245,8 @@ func _wall_jump():
 	wall_jump_speed = clamp(wall_jump_speed - WALL_JUMP_SPEED_CHANGE, MIN_WALL_JUMP_SPEED, MAX_WALL_JUMP_SPEED)
 
 func _start_jump_buffer():
+	if buffered_jump:
+		return
 	buffered_jump = true
 	await get_tree().create_timer(JUMP_BUFFER).timeout
 	buffered_jump = false
